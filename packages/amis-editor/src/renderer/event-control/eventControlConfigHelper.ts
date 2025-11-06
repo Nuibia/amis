@@ -310,9 +310,10 @@ export const actionConfigInitFormatterHoc =
       config.__actionExpression = action.args?.value;
     }
 
-    if (['ajax', 'download'].includes(action.actionType)) {
+    if (['ajax', 'download', 'workflow'].includes(action.actionType)) {
       config.api = action.api ?? action?.args?.api;
       config.options = action.options ?? action?.args?.options;
+      config.workflowId = action.workflowId ?? action?.args?.workflowId;
       if (typeof action?.api === 'string') {
         config.api = normalizeApi(action?.api);
       }

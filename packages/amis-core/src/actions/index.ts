@@ -12,6 +12,7 @@ import './BroadcastAction';
 import './CmptAction';
 import './StatusAction';
 import './AjaxAction';
+import './WorkflowAction';
 import './CopyAction';
 import './DialogAction';
 import './DrawerAction';
@@ -35,6 +36,7 @@ import {IBroadcastAction} from './BroadcastAction';
 import {ICmptAction} from './CmptAction';
 import {IStatusAction} from './StatusAction';
 import {IAjaxAction} from './AjaxAction';
+import {IWorkflowAction} from './WorkflowAction';
 import {ICopyAction} from './CopyAction';
 import {
   IDialogAction,
@@ -75,6 +77,7 @@ declare module '../schema' {
     usability: IStatusAction;
     ajax: IAjaxAction;
     download: IAjaxAction;
+    workflow: IWorkflowAction;
     copy: ICopyAction;
     dialog: IDialogAction;
     confirm: IConfirmAction;

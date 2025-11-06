@@ -97,6 +97,7 @@ const getOmitActionProp = (type: string) => {
       break;
     case 'ajax':
     case 'download':
+    case 'workflow':
       omitList = ['api', 'messages', 'options'];
       break;
     case 'setValue':
@@ -303,14 +304,20 @@ export const runAction = async (
   } else if (action.actionType === 'drawer') {
     action.drawer = {...(action.drawer ?? action.args?.drawer)};
     delete action.args?.drawer;
-  } else if (['ajax', 'download'].includes(action.actionType)) {
+  } else if (['ajax', 'download', 'workflow'].includes(action.actionType)) {
     const api = action.api ?? action.args?.api;
     action.api = typeof api === 'string' ? api : {...api};
     action.options = {...(action.options ?? action.args?.options)};
     action.messages = {...(action.messages ?? action.args?.messages)};
+    if (action.actionType === 'workflow') {
+      action.workflowId = action.workflowId ?? action.args?.workflowId;
+    }
     delete action.args?.api;
     delete action.args?.options;
     delete action.args?.messages;
+    if (action.actionType === 'workflow') {
+      delete action.args?.workflowId;
+    }
   }
   const cmptFlag = key.componentId || key.componentName;
   const targetComponent = getTargetComponent(action, renderer, event, cmptFlag);
@@ -341,7 +348,9 @@ export const runAction = async (
   // 默认为当前数据域
   const data =
     actionData !== undefined &&
-    !['ajax', 'download', 'dialog', 'drawer'].includes(action.actionType) // 避免非法配置影响对actionData的判断，导致动作配置中的数据映射失败
+    !['ajax', 'download', 'workflow', 'dialog', 'drawer'].includes(
+      action.actionType
+    ) // 避免非法配置影响对actionData的判断，导致动作配置中的数据映射失败
       ? actionData
       : mergeData;
 
