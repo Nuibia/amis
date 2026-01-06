@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {findDOMNode} from 'react-dom';
+import {findDomCompat as findDOMNode} from 'amis-core';
 import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
@@ -1694,7 +1694,7 @@ export class Table extends React.PureComponent<TableProps, TableState> {
     const mainStyle = {...this.props.style};
     if (this.state.widthReady) {
       Object.keys(this.state.colWidths).forEach((key, index, list) => {
-        let width = this.state.colWidths[index].realWidth;
+        let width = this.state.colWidths[index]?.realWidth;
         if (width) {
           mainStyle[`--Table-column-${key}-width`] = `${width}px`;
         }
